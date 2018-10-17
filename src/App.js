@@ -1,26 +1,52 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
+import List from './List.js';
+
 class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      newTodo: '',
+      todos: [],
+    };
+  }
+
+  handleChange = (event) => {
+    this.setState({ newTodo: event.target.value });
+  }
+
+  handleSubmission = (event) => {
+    if (event.key === 'Enter') {
+      this.setState((prevState) => {
+        return {
+          todos: prevState.todos.concat([prevState.newTodo]),
+          newTodo: '',
+        };
+      });
+    }
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+      <section className="todoapp">
+        <header className="header">
+          <h1>todos</h1>
         </header>
-      </div>
+        <main>
+          <input
+            className="new-todo"
+            placeholder="What needs to be done?"
+            value={this.state.newTodo}
+            onChange={this.handleChange}
+            onKeyUp={this.handleSubmission}
+            autoFocus
+          />
+
+          <List items={this.state.todos} />
+        </main>
+      </section>
     );
   }
 }
