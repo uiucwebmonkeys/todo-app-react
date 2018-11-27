@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { getRoot } from './api';
 import './App.css';
 
 import List from './List';
@@ -34,6 +35,8 @@ class App extends Component {
           lastID: nextID,
         };
       });
+
+      getRoot();
     }
   }
 
